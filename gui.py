@@ -127,10 +127,6 @@ def on_selection_change():
         cv2.imshow('Closing Result', closing)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
-    
-    
-    
-
 btn = tk.Button(root, font=("Helvetica", 10), text="Submit", command=on_selection_change)
 btn.pack()
 
