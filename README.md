@@ -1,5 +1,37 @@
-1. Create a vitrtual environment 
-2. Activate the virtual environment using activate keyword
-3. Import the necessary packages using pip when you find sqiuggly lines 
-4.```python
-python run gui.py
+Here’s your content properly formatted as a clean `README.md`:
+
+````md
+# Setup Instructions
+
+## 1. Create a Virtual Environment
+```bash
+python -m venv venv
+````
+
+## 2. Activate the Virtual Environment
+
+* **Windows:**
+
+```bash
+venv\Scripts\activate
+```
+
+* **Mac/Linux:**
+
+```bash
+source venv/bin/activate
+```
+
+## 3. Install Required Packages
+
+If you see squiggly lines (missing imports), install the required packages using:
+
+```bash
+pip install <package-name>
+```
+
+## 4. Run the Application
+
+```bash
+python gui.py
+```
