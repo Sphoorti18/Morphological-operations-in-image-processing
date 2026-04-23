@@ -8,12 +8,175 @@ from PIL import Image,ImageTk
 import os
 import cv2
 import numpy as np
-
+file_path = None
+resized = None
 root = tb.Window(themename="vapor")
 #root=tk.Tk()
 root.title("Morphological operations")
 root.iconbitmap(r"imageProcessing_output_24.ico")
 root.geometry("500x500")
+
+def nothing(x):
+    pass
+def erosion():
+    global file_path, resized
+    title_trackbar_element_shape = 'Element:\n 0: Rect \n 1: Cross \n 2: Ellipse \n 3: Diamond'
+    img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
+    resized = cv2.resize(img, (1900, 1000))
+    if img is None:
+        print("Error: Could not find or open image.")
+        exit()
+    window_name = 'Erosion'
+    cv2.namedWindow(window_name)
+    cv2.createTrackbar(title_trackbar_element_shape, window_name, 0, 3, nothing)
+    cv2.createTrackbar('Kernel Size', window_name, 0, 12, nothing)
+    while True:
+        try:
+            element_size = cv2.getTrackbarPos(title_trackbar_element_shape, window_name)
+            kernel_size = cv2.getTrackbarPos('Kernel Size', window_name)*2+1
+        except:
+            break  # window closed → avoid crash
+        if element_size == 0:
+            kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (kernel_size, kernel_size))
+        elif element_size == 1:
+            kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (kernel_size, kernel_size))
+        elif element_size == 2:
+            kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (kernel_size, kernel_size))
+        elif element_size == 3:
+            kernel = cv2.getStructuringElement(cv2.MORPH_DIAMOND, (kernel_size, kernel_size))
+        result = cv2.erode(resized, kernel)   
+        cv2.imshow('Erosion', result) 
+        if cv2.waitKey(1) == ord('q'):
+            break
+    cv2.destroyAllWindows()
+
+def dilation():
+    global file_path, resized
+    title_trackbar_element_shape = 'Element:\n 0: Rect \n 1: Cross \n 2: Ellipse \n 3: Diamond'
+    img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
+    resized = cv2.resize(img, (1900, 1000))
+    if img is None:
+        print("Error: Could not find or open image.")
+        exit()
+    window_name = 'Dilation'
+    cv2.namedWindow(window_name)
+    cv2.createTrackbar(title_trackbar_element_shape, window_name, 0, 3, nothing)
+    cv2.createTrackbar('Kernel Size', window_name, 0, 12, nothing)
+    while True:
+        try:
+            element_size = cv2.getTrackbarPos(title_trackbar_element_shape, window_name)
+            kernel_size = cv2.getTrackbarPos('Kernel Size', window_name)*2+1
+        except:
+            break  # window closed → avoid crash
+        if element_size == 0:
+            kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (kernel_size, kernel_size))
+        elif element_size == 1:
+            kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (kernel_size, kernel_size))
+        elif element_size == 2:
+            kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (kernel_size, kernel_size))
+        elif element_size == 3:
+            kernel = cv2.getStructuringElement(cv2.MORPH_DIAMOND, (kernel_size, kernel_size))
+        result = cv2.dilate(resized, kernel)   
+        cv2.imshow('Dilation', result) 
+        if cv2.waitKey(1) == ord('q'):
+            break
+    cv2.destroyAllWindows()
+
+def opening():
+    global file_path, resized
+    title_trackbar_element_shape = 'Element:\n 0: Rect \n 1: Cross \n 2: Ellipse \n 3: Diamond'
+    img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
+    resized = cv2.resize(img, (1900, 1000))
+    if img is None:
+        print("Error: Could not find or open image.")
+        exit()
+    window_name = 'Opening'
+    cv2.namedWindow(window_name)
+    cv2.createTrackbar(title_trackbar_element_shape, window_name, 0, 3, nothing)
+    cv2.createTrackbar('Kernel Size', window_name, 0, 12, nothing)
+    while True:
+        try:
+            element_size = cv2.getTrackbarPos(title_trackbar_element_shape, window_name)
+            kernel_size = cv2.getTrackbarPos('Kernel Size', window_name)*2+1
+        except:
+            break  # window closed → avoid crash
+        if element_size == 0:
+            kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (kernel_size, kernel_size))
+        elif element_size == 1:
+            kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (kernel_size, kernel_size))
+        elif element_size == 2:
+            kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (kernel_size, kernel_size))
+        elif element_size == 3:
+            kernel = cv2.getStructuringElement(cv2.MORPH_DIAMOND, (kernel_size, kernel_size))
+        result = cv2.morphologyEx(resized, cv2.MORPH_OPEN, kernel)   
+        cv2.imshow('Opening', result) 
+        if cv2.waitKey(1) == ord('q'):
+            break
+    cv2.destroyAllWindows()
+
+def closing():
+    global file_path, resized
+    title_trackbar_element_shape = 'Element:\n 0: Rect \n 1: Cross \n 2: Ellipse \n 3: Diamond'
+    img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
+    resized = cv2.resize(img, (1900, 1000))
+    if img is None:
+        print("Error: Could not find or open image.")
+        exit()
+    window_name = 'Closing'
+    cv2.namedWindow(window_name)
+    cv2.createTrackbar(title_trackbar_element_shape, window_name, 0, 3, nothing)
+    cv2.createTrackbar('Kernel Size', window_name, 0, 12, nothing)
+    while True:
+        try:
+            element_size = cv2.getTrackbarPos(title_trackbar_element_shape, window_name)
+            kernel_size = cv2.getTrackbarPos('Kernel Size', window_name)*2+1
+        except:
+            break  # window closed → avoid crash
+        if element_size == 0:
+            kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (kernel_size, kernel_size))
+        elif element_size == 1:
+            kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (kernel_size, kernel_size))
+        elif element_size == 2:
+            kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (kernel_size, kernel_size))
+        elif element_size == 3:
+            kernel = cv2.getStructuringElement(cv2.MORPH_DIAMOND, (kernel_size, kernel_size))
+        result = cv2.morphologyEx(resized, cv2.MORPH_CLOSE, kernel)   
+        cv2.imshow('Closing', result) 
+        if cv2.waitKey(1) == ord('q'):
+            break
+    cv2.destroyAllWindows()
+
+def gradient():
+    global file_path, resized
+    title_trackbar_element_shape = 'Element:\n 0: Rect \n 1: Cross \n 2: Ellipse \n 3: Diamond'
+    img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
+    resized = cv2.resize(img, (1900, 1000))
+    if img is None:
+        print("Error: Could not find or open image.")
+        exit()
+    window_name = 'Gradient'
+    cv2.namedWindow(window_name)
+    cv2.createTrackbar(title_trackbar_element_shape, window_name, 0, 3, nothing)
+    cv2.createTrackbar('Kernel Size', window_name, 0, 12, nothing)
+    while True:
+        try:
+            element_size = cv2.getTrackbarPos(title_trackbar_element_shape, window_name)
+            kernel_size = cv2.getTrackbarPos('Kernel Size', window_name)*2+1 
+        except:
+            break  # window closed → avoid crash
+        if element_size == 0:
+            kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (kernel_size, kernel_size))
+        elif element_size == 1:
+            kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (kernel_size, kernel_size))
+        elif element_size == 2:
+            kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (kernel_size, kernel_size))
+        elif element_size == 3:
+            kernel = cv2.getStructuringElement(cv2.MORPH_DIAMOND, (kernel_size, kernel_size))
+        result = cv2.morphologyEx(resized, cv2.MORPH_GRADIENT, kernel)   
+        cv2.imshow('Gradient', result) 
+        if cv2.waitKey(1) == ord('q'):
+            break
+    cv2.destroyAllWindows()
 
 
 #file upload with 100MB
@@ -22,7 +185,7 @@ def upload_file():
     global file_path
     file_path = filedialog.askopenfilename(
         title="Select File",
-        filetypes=[("All Files", "*.*")]
+        filetypes=[("Image Files", "*.jpg *.jpeg *.png *.bmp")]
     )
   
     if not file_path:
@@ -40,98 +203,45 @@ def upload_file():
     label_status.config(text=f"Selected: {os.path.basename(file_path)}")
     print(f"Uploading: {file_path} (Size: {file_size} bytes)")
 
-btn_upload = tk.Button(root, font=("Helvetica", 10),text="Select Image File (Max 100MB)", command=upload_file)
+btn_upload = tk.Button(root, font=("Courier", 10),text="Select Image File (Max 100MB)", command=upload_file)
 btn_upload.pack(pady=20)
 
-label_status = tk.Label(root, text="")
+label_status = tk.Label(root, font=("Courier", 10),text="Not Selected")
 label_status.pack(pady=10)
 
 
 #dropdown menu code
 
 # Define options
-options = ["Erosion", "Dilation", "Opening", "Closing"]
+options = ["Erosion", "Dilation", "Opening", "Closing", "Gradient"]
 
 
 # Create Combobox
-combo = ttk.Combobox(root, font=("Helvetica", 10),values=options, state="readonly")
+combo = ttk.Combobox(root, font=("Courier", 10),values=options, state="readonly")
 combo.set("Erosion")  # Set default value
 combo.pack(pady=20)
 
 # Function to get selected value
 def on_selection_change():
+    #global resized
     #print(f"Selected: {combo.get()}")
     selected=combo.get()
     if selected == options[0]:
-        # Load the input image in grayscale
-        img = cv2.imread(file_path, 0)
-        resized = cv2.resize(img, (1900, 1000)) # (width, height)
-        # Define the kernel (e.g., 5x5 matrix of ones)
-        # Larger kernels result in more significant erosion
-        kernel = np.ones((5, 5), np.uint8)
-        erosion = cv2.erode(resized, kernel, iterations=1)
-        cv2.imshow('Original', resized)
-        cv2.imshow('Erosion', erosion)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-
+        erosion()
+        
     elif selected == options[1]:
-        img = cv2.imread(file_path, 0) # Read in grayscale
-        resized = cv2.resize(img, (1900, 1000)) # (width, height)
-        # 2. Define the kernel (structuring element)
-        # A 5x5 kernel of ones will expand the foreground by roughly 2 pixels in each direction
-        kernel = np.ones((5, 5), np.uint8)
-
-        # 3. Apply dilation
-        # iterations=1 defines how many times the operation is repeated
-        dilated_img = cv2.dilate(resized, kernel, iterations=1)
-
-        # 4. Display results
-        cv2.imshow('Original', resized)
-        cv2.imshow('Dilated', dilated_img)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        dilation()
 
     elif selected == options[2]:
-        # 1. Load the input image (grayscale or binary is recommended)
-        image = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
-        resized = cv2.resize(image, (1900, 1000)) # (width, height)
-        # 2. Define the kernel (structuring element)
-        # A 5x5 rectangular kernel is common; larger kernels remove more noise.
-        kernel = np.ones((5, 5), np.uint8)
-
-        # 3. Apply the Opening operation
-        # Opening = Erosion followed by Dilation
-        opening = cv2.morphologyEx(resized, cv2.MORPH_OPEN, kernel)
-
-        # 4. Display the results
-        cv2.imshow('Original Image', resized)
-        cv2.imshow('Opening Result (Noise Removed)', opening)
-
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-
+        opening()
+        
     elif selected == options[3]:
-        img = cv2.imread(file_path, 0)  # Load in grayscale
-        resized = cv2.resize(img, (1900, 1000)) # (width, height)
-        # Define a structuring element (kernel)
-        # Larger kernels remove larger holes
-        kernel = np.ones((5,5), np.uint8)
+        closing()
+    elif selected == options[4]:
+        gradient()
 
-        # Perform the closing operation
-        # cv2.MORPH_CLOSE specifies dilation followed by erosion
-        closing = cv2.morphologyEx(resized, cv2.MORPH_CLOSE, kernel)
-
-        # Display the results
-        cv2.imshow('Original', resized)
-        cv2.imshow('Closing Result', closing)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
-    
-    
-    
-
-btn = tk.Button(root, font=("Helvetica", 10), text="Submit", command=on_selection_change)
+      
+btn = tk.Button(root, font=("Courier", 10), text="Apply Operation", command=on_selection_change)
 btn.pack()
 
 root.mainloop()
