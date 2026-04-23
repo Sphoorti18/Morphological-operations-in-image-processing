@@ -1,4 +1,3 @@
-Here’s your content properly formatted as a clean `README.md`:
 
 ````md
 # Setup Instructions
