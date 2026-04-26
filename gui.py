@@ -237,10 +237,10 @@ def on_selection_change():
         
     elif selected == options[3]:
         closing()
+
     elif selected == options[4]:
         gradient()
-
-      
+    
 btn = tk.Button(root, font=("Courier", 10), text="Apply Operation", command=on_selection_change)
 btn.pack()
 
