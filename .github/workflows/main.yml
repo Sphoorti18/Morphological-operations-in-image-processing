@@ -1,6 +1,6 @@
 # docs: https://docs.flet.dev/publish/web/static-website/hosting/github-pages/
 
-name: Web Build + Deploy to GitHub Pages
+name: run gui.py
 
 on:
   push:
